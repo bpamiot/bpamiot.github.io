@@ -1,4 +1,40 @@
 {% if site.bib_search %}
   <script src="{{ '/assets/js/bibsearch.js' | relative_url | bust_file_cache }}" type="module"></script>
-  <input type="text" id="bibsearch" spellcheck="false" autocomplete="off" class="search bibsearch-form-input" placeholder="Type to filter">
+  
+  <!-- Search Input -->
+  <div class="search-container">
+    <input type="text" id="bibsearch" spellcheck="false" autocomplete="off" 
+           class="search bibsearch-form-input" placeholder="Search communication !">
+  </div>
+  
+  <!-- Venue Filter Component -->
+  {% include venue_filter.liquid %}
+  
+  <!-- Bibliography Container -->
+  <div class="bibliography-container">
+    {% bibliography %}
+  </div>
+  
+  <!-- Initialize venue data for future filtering -->
+  <script>
+    // This will be used when we implement the filtering functionality
+    window.venueData = {
+      {% for venue in site.data.venues %}
+        '{{ venue[0] }}': {
+          color: '{{ venue[1].color }}',
+          textColor: '{{ venue[1].text_color }}'
+        }{% unless forloop.last %},{% endunless %}
+      {% endfor %}
+    };
+  </script>
+  
+  <style>
+    .search-container {
+      margin-bottom: 1.5rem;
+    }
+    
+    .bibliography-container {
+      margin-top: 1.5rem;
+    }
+  </style>
 {% endif %}

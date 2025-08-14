@@ -1,70 +1,138 @@
 import { highlightSearchTerm } from "./highlight-search-term.js";
 
-document.addEventListener("DOMContentLoaded", function () {
-  // actual bibsearch logic
-  const filterItems = (searchTerm) => {
-    document.querySelectorAll(".bibliography, .unloaded").forEach((element) => element.classList.remove("unloaded"));
-
-    // highlight-search-term
-    if (CSS.highlights) {
-      const nonMatchingElements = highlightSearchTerm({ search: searchTerm, selector: ".bibliography > li" });
-      if (nonMatchingElements == null) {
-        return;
-      }
-      nonMatchingElements.forEach((element) => {
-        element.classList.add("unloaded");
-      });
-    } else {
-      // Simply add unloaded class to all non-matching items if Browser does not support CSS highlights
-      document.querySelectorAll(".bibliography > li").forEach((element, index) => {
-        const text = element.innerText.toLowerCase();
-        if (text.indexOf(searchTerm) == -1) {
-          element.classList.add("unloaded");
-        }
-      });
+// Helper function to extract venue from a bibliography entry
+function extractVenueFromEntry(entry) {
+  // Method 1: Look for venue badge in the entry
+  const venueBadge = entry.querySelector('.venue-badge');
+  if (venueBadge) {
+    return venueBadge.textContent.trim().toLowerCase();
+  }
+  
+  // Method 2: Look for common venue patterns in the entry text
+  const entryText = entry.textContent.toLowerCase();
+  const knownVenues = [
+    'journal', 'proceedings', 'patent', 'oral presentation', 
+    'visual presentation', 'thesis'
+  ];
+  
+  for (const venue of knownVenues) {
+    if (entryText.includes(venue)) {
+      return venue;
     }
+  }
+  
+  return 'unknown';
+}
 
-    document.querySelectorAll("h2.bibliography").forEach(function (element) {
-      let iterator = element.nextElementSibling; // get next sibling element after h2, which can be h3 or ol
-      let hideFirstGroupingElement = true;
-      // iterate until next group element (h2), which is already selected by the querySelectorAll(-).forEach(-)
-      while (iterator && iterator.tagName !== "H2") {
-        if (iterator.tagName === "OL") {
-          const ol = iterator;
-          const unloadedSiblings = ol.querySelectorAll(":scope > li.unloaded");
-          const totalSiblings = ol.querySelectorAll(":scope > li");
+// Function to get currently selected venues
+function getSelectedVenues() {
+  const checkboxes = document.querySelectorAll('.venue-checkbox:checked');
+  return Array.from(checkboxes).map(checkbox => checkbox.value.toLowerCase());
+}
 
-          if (unloadedSiblings.length === totalSiblings.length) {
-            ol.previousElementSibling.classList.add("unloaded"); // Add the '.unloaded' class to the previous grouping element (e.g. year)
-            ol.classList.add("unloaded"); // Add the '.unloaded' class to the OL itself
-          } else {
-            hideFirstGroupingElement = false; // there is at least some visible entry, don't hide the first grouping element
-          }
-        }
-        iterator = iterator.nextElementSibling;
-      }
-      // Add unloaded class to first grouping element (e.g. year) if no item left in this group
-      if (hideFirstGroupingElement) {
-        element.classList.add("unloaded");
-      }
-    });
-  };
-
-  const updateInputField = () => {
-    const hashValue = decodeURIComponent(window.location.hash.substring(1)); // Remove the '#' character
-    document.getElementById("bibsearch").value = hashValue;
-    filterItems(hashValue);
-  };
-
-  // Sensitive search. Only start searching if there's been no input for 300 ms
-  let timeoutId;
-  document.getElementById("bibsearch").addEventListener("input", function () {
-    clearTimeout(timeoutId); // Clear the previous timeout
-    const searchTerm = this.value.toLowerCase();
-    timeoutId = setTimeout(filterItems(searchTerm), 300);
+// Function to check if an entry matches the selected venues
+function matchesVenueFilter(entry, selectedVenues) {
+  if (selectedVenues.length === 0) return true; // Show all if no venues selected
+  
+  const entryVenue = entry.dataset.venue || 'unknown';
+  const entryTitle = entry.querySelector('a[href^="#"]')?.textContent?.trim() || 'Untitled';
+  
+  console.group('Checking venue for entry:', entryTitle);
+  console.log('Entry venue:', entryVenue);
+  console.log('Selected venues:', selectedVenues);
+  
+  const matches = selectedVenues.some(venue => {
+    const match = entryVenue.toLowerCase() === venue.toLowerCase();
+    console.log(`Comparing '${entryVenue}' with '${venue}':`, match);
+    return match;
   });
+  
+  console.log('Final match result:', matches);
+  console.groupEnd();
+  
+  return matches;
+}
 
-  window.addEventListener("hashchange", updateInputField); // Update the filter when the hash changes
+// Function to update the display based on search and venue filters
+function updateDisplay() {
+  const searchTerm = document.getElementById('bibsearch')?.value.trim().toLowerCase() || '';
+  const selectedVenues = getSelectedVenues();
+  
+  document.querySelectorAll(".bibliography > li").forEach((entry) => {
+    const entryText = entry.textContent.toLowerCase();
+    const matchesSearch = searchTerm === '' || entryText.includes(searchTerm);
+    const matchesVenue = matchesVenueFilter(entry, selectedVenues);
+    
+    if (matchesSearch && matchesVenue) {
+      entry.classList.remove('unloaded');
+    } else {
+      entry.classList.add('unloaded');
+    }
+  });
+  
+  // Update group visibility
+  document.querySelectorAll("h2.bibliography").forEach((element) => {
+    let iterator = element.nextElementSibling;
+    let hideFirstGroupingElement = true;
+    
+    while (iterator && iterator.tagName !== "H2") {
+      if (iterator.tagName === "OL") {
+        const ol = iterator;
+        const hasVisibleItems = Array.from(ol.children).some(li => !li.classList.contains('unloaded'));
+        
+        if (hasVisibleItems) {
+          ol.classList.remove('unloaded');
+          hideFirstGroupingElement = false;
+        } else {
+          ol.classList.add('unloaded');
+        }
+      }
+      iterator = iterator.nextElementSibling;
+    }
+    
+    if (hideFirstGroupingElement) {
+      element.classList.add('unloaded');
+    } else {
+      element.classList.remove('unloaded');
+    }
+  });
+  
+  // Update URL hash with search term
+  if (searchTerm) {
+    window.location.hash = searchTerm;
+  } else {
+    history.pushState('', document.title, window.location.pathname + window.location.search);
+  }
+}
 
-  updateInputField(); // Update filter when page loads
+document.addEventListener("DOMContentLoaded", function () {
+  // Extract and mark venue information for each entry
+  const entries = document.querySelectorAll(".bibliography > li");
+  console.log(`Found ${entries.length} bibliography entries`);
+  
+  entries.forEach((entry) => {
+    const venue = extractVenueFromEntry(entry);
+    entry.dataset.venue = venue;
+  });
+  
+  // Initialize search input
+  const searchInput = document.getElementById("bibsearch");
+  if (searchInput) {
+    searchInput.addEventListener("input", updateDisplay);
+    
+    // Handle initial search from URL hash
+    const initialSearch = window.location.hash.substring(1);
+    if (initialSearch) {
+      searchInput.value = initialSearch;
+    }
+  }
+  
+  // Initialize venue checkboxes
+  document.querySelectorAll('.venue-checkbox').forEach(checkbox => {
+    checkbox.checked = true; // All checked by default
+    checkbox.addEventListener('change', updateDisplay);
+  });
+  
+  // Initial display update
+  updateDisplay();
 });

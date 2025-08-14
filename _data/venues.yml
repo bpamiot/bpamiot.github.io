@@ -1,9 +1,23 @@
-"AJP":
-  url: https://aapt.scitation.org/journal/ajp
-  color: "#00369f"
+"Journal":
+  color: "#CD001A"
+  text_color: "#FFFFFF"
 
-"PhysRev":
-  url: https://journals.aps.org/
+"Proceedings":
+  color: "#EF6A00"
+  text_color: "#000000"
 
-"Vision":
-  color: "#009f36"
+"Patent":
+  color: "#F2CD00"
+  text_color: "#000000"
+
+"Oral Presentation":
+  color: "#79C300"
+  text_color: "#000000"
+
+"Visual Presentation":
+  color: "#1961AE"
+  text_color: "#FFFFFF"
+
+"Thesis":
+  color: "#61007D"
+  text_color: "#FFFFFF"

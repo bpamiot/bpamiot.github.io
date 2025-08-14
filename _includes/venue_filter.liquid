@@ -1,0 +1,127 @@
+<!-- Venue Filter UI Component -->
+<div class="venue-filter">
+  <div class="venue-filter-header">
+    <h3>Filter by Venue Type</h3>
+  </div>
+  <div class="venue-options">
+    {% assign venues = site.data.venues %}
+    {% for venue in venues %}
+      {% assign venue_id = venue[0] | slugify %}
+      <div class="form-check">
+        <input class="form-check-input venue-checkbox" type="checkbox" 
+               value="{{ venue[0] }}" id="venue-{{ venue_id }}" checked>
+        <label class="form-check-label" for="venue-{{ venue_id }}">
+          <span class="venue-badge" style="--venue-color: {{ venue[1].color }}; --venue-text-color: {{ venue[1].text_color }};">
+            {{ venue[0] }}
+          </span>
+        </label>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+.venue-filter {
+  margin: 1.5rem 0;
+  padding: 1.25rem;
+  background-color: var(--global-card-bg-color);
+  border-radius: 0.5rem;
+  border: 1px solid var(--global-divider-color);
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.05);
+}
+
+.venue-filter-header {
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--global-divider-color);
+}
+
+.venue-filter-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--global-text-color);
+}
+
+.venue-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.venue-badge {
+  --badge-bg: var(--venue-color);
+  --badge-color: var(--venue-text-color);
+  
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 0.9rem;
+  border-radius: 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  background-color: var(--badge-bg);
+  color: var(--badge-color);
+}
+
+.venue-badge:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.venue-checkbox:not(:checked) + label .venue-badge {
+  opacity: 0.6;
+  border-color: var(--global-divider-color);
+  background-color: var(--global-bg-color) !important;
+  color: var(--global-text-color-light) !important;
+  box-shadow: none;
+}
+
+.venue-checkbox:not(:checked) + label .venue-badge:hover {
+  opacity: 0.8;
+}
+
+.venue-checkbox {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .venue-badge {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .venue-badge:hover {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .venue-options {
+    gap: 0.6rem;
+  }
+  
+  .venue-badge {
+    padding: 0.35rem 0.75rem;
+    font-size: 0.825rem;
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize venue checkboxes - no select all functionality needed
+  const venueCheckboxes = document.querySelectorAll('.venue-checkbox');
+  
+  // Add change event listeners to all checkboxes
+  venueCheckboxes.forEach(checkbox => {
+    checkbox.checked = true; // All checked by default
+  });
+});
+</script>
