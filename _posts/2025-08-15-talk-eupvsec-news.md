@@ -15,7 +15,7 @@ This presentation will introduce a straightforward implementation of the [FMI](h
 
 The numerical co-simulation framework is adaptable to eco-photovoltaic systems (agrivoltaics and floating PV) where accurate environmental forecasting is essential for informed decision-making.
 
-Session number : 4AO.8.6. 
+Session number : 4AO.8.6.
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
@@ -28,6 +28,3 @@ Session number : 4AO.8.6.
 <div class="caption">
     See you on Monday afternoon !
 </div>
-
-
-

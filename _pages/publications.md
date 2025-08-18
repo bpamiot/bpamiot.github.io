@@ -1,7 +1,7 @@
 ---
 layout: page
 permalink: /publications/
-title: Scientific Communications 
+title: Scientific Communications
 description: Communications by categories in reversed chronological order.
 nav: true
 nav_order: 2

@@ -1,9 +1,8 @@
 ---
-layout: teaching 
+layout: teaching
 permalink: /teaching/
 title: Teaching
-description: 
+description:
 nav: true
-nav_order: 4 
+nav_order: 4
 ---
-

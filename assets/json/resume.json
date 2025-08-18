@@ -57,52 +57,52 @@
       "summary": "Peer review for EPJ Photovoltaics scientific journal"
     }
   ],
-   "education": [
-       {
-           "institution": "Centre of Thermal Energy Sciences (CETHIL), Lyon 1 University",
-           "location": "Villeurbanne, France",
-           "url": "",
-           "area": "Energy & Thermal Science",
-           "studyType": "PhD Candidate",
-           "startDate": "2019",
-           "endDate": "2023",
-           "score": "",
-           "courses": ["Coursework in numerical modelling and photovoltaics sciences ", "Dissertation: Thermal modelling of floating photovoltaics"]
-       },
-       {
-           "institution": "Heriot-Watt University",
-           "location": "Stromness, Scotland",
-           "url": "",
-           "area": "Renewable Energy",
-           "studyType": "Master of Science",
-           "startDate": "2018",
-           "endDate": "2019",
-           "score": "",
-           "courses": ["Coursework in Renewable Energy and Marine Renewables", "Dissertation: Impact of shared area sizes in local energy communities"]
-       },
-       {
-           "institution": "Nantes University - Polytech",
-           "location": "Nantes, France",
-           "url": "",
-           "area": "Thermal Science & Energy",
-           "studyType": "Engineering Degree",
-           "startDate": "2017",
-           "endDate": "2019",
-           "score": "",
-           "courses": ["Coursework in fundamental and applied thermal transfers"]
-       },
-       {
-           "institution": "Paris-Saclay University - IUT Orsay",
-           "location": "Orsay, France",
-           "url": "",
-           "area": "Physical Measurements",
-           "studyType": "Two-year University Degree in Technology",
-           "startDate": "2016",
-           "endDate": "2017",
-           "score": "",
-           "courses": ["Coursework in applied electronics and programming for sensors", "Final project: retro-engineering of a spectro-photometer"]
-       }
-   ],
+  "education": [
+    {
+      "institution": "Centre of Thermal Energy Sciences (CETHIL), Lyon 1 University",
+      "location": "Villeurbanne, France",
+      "url": "",
+      "area": "Energy & Thermal Science",
+      "studyType": "PhD Candidate",
+      "startDate": "2019",
+      "endDate": "2023",
+      "score": "",
+      "courses": ["Coursework in numerical modelling and photovoltaics sciences ", "Dissertation: Thermal modelling of floating photovoltaics"]
+    },
+    {
+      "institution": "Heriot-Watt University",
+      "location": "Stromness, Scotland",
+      "url": "",
+      "area": "Renewable Energy",
+      "studyType": "Master of Science",
+      "startDate": "2018",
+      "endDate": "2019",
+      "score": "",
+      "courses": ["Coursework in Renewable Energy and Marine Renewables", "Dissertation: Impact of shared area sizes in local energy communities"]
+    },
+    {
+      "institution": "Nantes University - Polytech",
+      "location": "Nantes, France",
+      "url": "",
+      "area": "Thermal Science & Energy",
+      "studyType": "Engineering Degree",
+      "startDate": "2017",
+      "endDate": "2019",
+      "score": "",
+      "courses": ["Coursework in fundamental and applied thermal transfers"]
+    },
+    {
+      "institution": "Paris-Saclay University - IUT Orsay",
+      "location": "Orsay, France",
+      "url": "",
+      "area": "Physical Measurements",
+      "studyType": "Two-year University Degree in Technology",
+      "startDate": "2016",
+      "endDate": "2017",
+      "score": "",
+      "courses": ["Coursework in applied electronics and programming for sensors", "Final project: retro-engineering of a spectro-photometer"]
+    }
+  ],
   "languages": [
     {
       "language": "French",
@@ -118,5 +118,6 @@
       "language": "Japanese",
       "fluency": "N4",
       "icon": ""
-    }]
+    }
+  ]
 }

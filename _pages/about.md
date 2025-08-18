@@ -1,8 +1,8 @@
 ---
 layout: about
-title: Hello world ! 
+title: Hello world !
 permalink: /
-subtitle: 
+subtitle:
 
 profile:
   align: right
@@ -20,17 +20,16 @@ announcements:
   limit: 5 # leave blank to include all the news in the `_news` folder
 
 latest_posts:
-  enabled: true 
+  enabled: true
   scrollable: true # adds a vertical scroll bar if there are more than 3 new posts items
   limit: 3 # leave blank to include all the blog posts
 ---
 
-I'm a research engineer previously working at the *Centre d'Enseignement et de Recherche en Environnement Atmosphérique*, **[CEREA](https://www.cerea-lab.fr/)**, laboratory.
+I'm a research engineer previously working at the _Centre d'Enseignement et de Recherche en Environnement Atmosphérique_, **[CEREA](https://www.cerea-lab.fr/)**, laboratory.
 
-I am particurlarly interested in the **integration** of **photovoltaic systems** in the **environment**.  
+I am particurlarly interested in the **integration** of **photovoltaic systems** in the **environment**.
 
 ### main activities
 
-- developer of system-level solutions for PV modules: numerical simulations, experimental prototypes, monitoring tools. 
+- developer of system-level solutions for PV modules: numerical simulations, experimental prototypes, monitoring tools.
 - user/contributer for the [code_saturne](https://www.code-saturne.org/cms/web/) solver (Computational Fluid Dynamics).
-

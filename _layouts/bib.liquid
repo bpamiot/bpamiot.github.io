@@ -21,9 +21,18 @@
             {% endif -%}
           >
             {% if site.data.venues[entry.abbr].url %}
-              <a href="{{ site.data.venues[entry.abbr].url }}" {% if site.data.venues[entry.abbr].text_color != blank %}style="color: {{ site.data.venues[entry.abbr].text_color }} !important;"{% endif %}>{{ entry.abbr }}</a>
+              <a
+                href="{{ site.data.venues[entry.abbr].url }}"
+                {% if site.data.venues[entry.abbr].text_color != blank %}
+                  style="color: {{ site.data.venues[entry.abbr].text_color }} !important;"
+                {% endif %}
+              >
+                {{- entry.abbr -}}
+              </a>
             {% else %}
-              <div style="{% if site.data.venues[entry.abbr].text_color != blank %}color: {{ site.data.venues[entry.abbr].text_color }} !important;{% endif %}">{{- entry.abbr -}}</div>
+              <div style="{% if site.data.venues[entry.abbr].text_color != blank %}color: {{ site.data.venues[entry.abbr].text_color }} !important;{% endif %}">
+                {{- entry.abbr -}}
+              </div>
             {% endif %}
           </abbr>
         {% else %}
