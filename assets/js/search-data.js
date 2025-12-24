@@ -122,7 +122,7 @@ ninja.data = [{
         title: 'HAL',
         section: 'Socials',
         handler: () => {
-          window.open("https://cv.hal.science/1438605", "_blank");
+          window.open("https://cv.hal.science/baptiste-amiot", "_blank");
         },
       },{
         id: 'social-linkedin',
